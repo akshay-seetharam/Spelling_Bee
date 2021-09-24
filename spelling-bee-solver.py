@@ -17,7 +17,7 @@ for i in range(6):
 	else:
 		raise(Exception("You need to enter one letter at a time"))
 
-a = input("Would you like a list filtered by common words? (y/n): ")
+a = input("Would you like the list filtered by common words? (y/n): ")
 others = others.lower()
 pattern = "[" + others + required + "]+"
 print("Pattern is", pattern)
@@ -36,7 +36,11 @@ for i in words:
 sorted = {k: v for k, v in sorted(correct.items(), key=lambda item: item[1], reverse = True)}
 
 print("Matched", matched, "WORDS")
+count = 0
 for i in sorted:
+	if count % 20 == 0 and count != 0:
+		if input("Would you like more? y/n?: ") == "n":
+			break
 	if a == "y":
 		with open('english-words/words_alpha.txt') as f:
 			if i not in f.read():
@@ -45,3 +49,4 @@ for i in sorted:
 		print("-----\nPANGRAM")
 	print(i, sorted[i])
 	print("-----")
+	count += 1
