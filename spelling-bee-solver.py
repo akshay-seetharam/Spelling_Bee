@@ -1,10 +1,10 @@
 import json
-import regex as re
+from regex import fullmatch
 import os
 
 # os.chdir(input("What is the full path to your home directory? You can get this by typing 'echo $HOME' in the terminal.\n"))
-
-
+path = os.path.join(input("What is the parent directory of Spelling_Bee?\n"), "Spelling_Bee")
+os.chdir(path)
 # This solves the NYT spelling-bee puzzle
 
 required = input("What is the center letter?\n").lower()
@@ -21,7 +21,7 @@ a = input("Would you like the list filtered by common words? (y/n): ")
 others = others.lower()
 pattern = "[" + others + required + "]+"
 print("Pattern is", pattern)
-with open('english-words/words_dictionary.json') as json_file:
+with open(os.path.join(path,'english-words/words_dictionary.json')) as json_file:
 	words = json.load(json_file)
 
 print("Searching", len(words), "WORDS")
@@ -29,7 +29,7 @@ print("Searching", len(words), "WORDS")
 correct = {}
 matched = 0
 for i in words:
-	if re.fullmatch(pattern, i.lower()) and re.fullmatch(".*" + required + ".*", i.lower()) is not None:
+	if fullmatch(pattern, i.lower()) and fullmatch(".*" + required + ".*", i.lower()) is not None:
 		correct[i] = len(i)
 		matched += 1
 
@@ -42,7 +42,7 @@ for i in sorted:
 		if input("Would you like more? y/n?: ") == "n":
 			break
 	if a == "y":
-		with open('english-words/words_alpha.txt') as f:
+		with open(os.path.join(path,'english-words/words_alpha.txt')) as f:
 			if i not in f.read():
 				continue
 	if len(set(i)) >= 7:
